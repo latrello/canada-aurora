@@ -21,14 +21,15 @@
         body {
             font-family: 'Noto Sans TC', sans-serif;
             background-color: #F7F4EB;
-            background-image: radial-gradient(#E0E5D5 1px, transparent 1px);
+            background-image: radial-gradient(#D5DBCB 1px, transparent 1px);
             background-size: 20px 20px;
             -webkit-tap-highlight-color: transparent;
             padding-top: env(safe-area-inset-top);
             padding-bottom: env(safe-area-inset-bottom);
+            color: #2C3E50;
         }
         .soft-shadow {
-            box-shadow: 4px 4px 0px #E0E5D5;
+            box-shadow: 4px 4px 0px #D5DBCB;
         }
         .no-scrollbar::-webkit-scrollbar {
             display: none;
@@ -42,7 +43,7 @@
             -webkit-user-select: none;
             -webkit-overflow-scrolling: touch;
         }
-        input, textarea {
+        input, textarea, select {
             -webkit-user-select: text;
         }
         .safe-area-bottom {
@@ -72,13 +73,12 @@
 <body class="overflow-x-hidden fade-in-pwa">
     <div id="root"></div>
     <script>
-        // 改良後的 Service Worker 註冊，增加錯誤容錯避免報錯導致白屏
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
                     .then(reg => console.log('SW Registered'))
                     .catch(err => {
-                        console.warn('Service Worker 註冊被跳過 (這在開發預覽環境是正常的):', err.message);
+                        console.warn('Service Worker 註冊被跳過:', err.message);
                     });
             });
         }

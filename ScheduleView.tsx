@@ -38,10 +38,15 @@ const initialScheduleData: Record<string, ScheduleItem[]> = {
     { id: '19-3', time: '19:30', location: '加拿大廣場 Canada Place', category: Category.SCENERY, note: '欣賞夜景回民宿 \n Enjoy the night view' }
   ],
   '2024-02-20': [
-    { id: '20-1', time: '09:00', location: '托瓦遜渡輪碼頭 Tsawwassen Ferry Terminal', category: Category.SCENERY, note: '搭乘渡輪前往維多利亞 \n Take BC Ferries to Victoria' },
-    { id: '20-2', time: '12:00', location: '維多利亞唐人街 Victoria Chinatown', category: Category.SCENERY, note: '加拿大最古老的唐人街 \n Canada\'s oldest Chinatown' },
-    { id: '20-3', time: '14:00', location: '卑詩省議會大廈 BC Parliament Buildings', category: Category.SCENERY },
-    { id: '20-4', time: '16:00', location: '維多利亞漁人碼頭 Fisherman\'s Wharf Victoria', category: Category.FOOD, note: '必吃炸魚薯條 \n Famous Fish & Chips here' }
+    { id: '20-1', time: '07:00', location: '出門 (Lyft or 捷運)', category: Category.TRANSPORT, note: '預估車費 $40-50 \n Estimated fare: Uber $50 / Lyft $40' },
+    { id: '20-2', time: '09:00', location: 'BC Ferries 渡輪 (Tsawwassen to Victoria)', category: Category.TRANSPORT, note: '船程 1.5hr。開船前 60~30 分鐘報到 \n Check-in 30-60 mins before. Departure at 9:00 AM' },
+    { id: '20-3', time: '11:40', location: '碼頭公車站 (Bus 70/72)', category: Category.TRANSPORT, note: '前往維多利亞市中心，約半小時 \n Bus 70 is faster, Bus 72 slower. Fare $2.5' },
+    { id: '20-4', time: '12:30', location: '維多利亞唐人街 & 番攤巷', category: Category.SCENERY, note: '第一站：維多利亞唐人街 (Victoria Chinatown) \n 第二站：番攤巷 (Fan Tan Alley)' },
+    { id: '20-5', time: '14:00', location: '內港步道 & 卑詩省議會大廈', category: Category.SCENERY, note: '第三站：內港步道 (Inner Harbour) \n 第四站：卑詩省議會大廈 (BC Legislative Assembly)' },
+    { id: '20-6', time: '16:00', location: '維多利亞漁人碼頭', category: Category.FOOD, note: '第五站：漁人碼頭 (Fisherman\'s Wharf) \n 推薦炸魚薯條' },
+    { id: '20-7', time: '17:30', location: '搭乘公車返回碼頭', category: Category.TRANSPORT, note: '17:30~18:10 (bus)' },
+    { id: '20-8', time: '19:00', location: 'BC Ferries 渡輪 (Victoria to Tsawwassen)', category: Category.TRANSPORT, note: '船程 1.5hr。19:00~20:35 \n Return trip to Vancouver' },
+    { id: '20-9', time: '21:00', location: 'Lyft 回家', category: Category.TRANSPORT }
   ],
   '2024-02-21': [
     { id: '21-1', time: '10:00', location: '格蘭維爾島市場 Granville Island Public Market', category: Category.SCENERY, note: '必喝蛤蜊酥皮濃湯 \n Clam Chowder is a must-try' },
@@ -212,10 +217,10 @@ const ScheduleView: React.FC = () => {
 
   const getCategoryTheme = (cat: Category) => {
     switch(cat) {
-      case Category.SCENERY: return 'bg-emerald-50 text-emerald-700 border-emerald-100';
-      case Category.FOOD: return 'bg-orange-50 text-orange-700 border-orange-100';
-      case Category.TRANSPORT: return 'bg-blue-50 text-blue-700 border-blue-100';
-      case Category.STAY: return 'bg-purple-50 text-purple-700 border-purple-100';
+      case Category.SCENERY: return 'bg-emerald-50 text-emerald-800 border-emerald-200';
+      case Category.FOOD: return 'bg-orange-50 text-orange-800 border-orange-200';
+      case Category.TRANSPORT: return 'bg-blue-50 text-blue-800 border-blue-200';
+      case Category.STAY: return 'bg-purple-50 text-purple-800 border-purple-200';
     }
   };
 
@@ -227,7 +232,7 @@ const ScheduleView: React.FC = () => {
           <button 
             onClick={() => shiftDay('left')}
             disabled={sortedDates.indexOf(selectedDate) === 0}
-            className="w-8 h-8 rounded-full bg-white border border-[#E0E5D5] text-[#5D6D7E] flex items-center justify-center disabled:opacity-30 active:scale-90 transition-all soft-shadow"
+            className="w-9 h-9 rounded-full bg-white border border-[#D5DBCB] text-[#34495E] flex items-center justify-center disabled:opacity-30 active:scale-90 transition-all soft-shadow"
             title="將整日行程往前挪移"
           >
             <i className="fa-solid fa-angle-left"></i>
@@ -235,7 +240,7 @@ const ScheduleView: React.FC = () => {
           <button 
             onClick={() => shiftDay('right')}
             disabled={sortedDates.indexOf(selectedDate) === sortedDates.length - 1}
-            className="w-8 h-8 rounded-full bg-white border border-[#E0E5D5] text-[#5D6D7E] flex items-center justify-center disabled:opacity-30 active:scale-90 transition-all soft-shadow"
+            className="w-9 h-9 rounded-full bg-white border border-[#D5DBCB] text-[#34495E] flex items-center justify-center disabled:opacity-30 active:scale-90 transition-all soft-shadow"
             title="將整日行程往後挪移"
           >
             <i className="fa-solid fa-angle-right"></i>
@@ -251,9 +256,9 @@ const ScheduleView: React.FC = () => {
             <button
               key={date}
               onClick={() => setSelectedDate(date)}
-              className={`flex-shrink-0 w-16 h-24 rounded-3xl flex flex-col items-center justify-center transition-all ${isSelected ? 'bg-[#88D8B0] text-white soft-shadow scale-105' : 'bg-white text-gray-400'}`}
+              className={`flex-shrink-0 w-16 h-24 rounded-3xl flex flex-col items-center justify-center transition-all ${isSelected ? 'bg-[#2D8A61] text-white soft-shadow scale-105 shadow-lg' : 'bg-white text-gray-500 border border-[#E0E5D5]'}`}
             >
-              <span className="text-[10px] opacity-70 mb-1 font-bold">{date.split('-')[1]}/{date.split('-')[2]}</span>
+              <span className={`text-[10px] ${isSelected ? 'opacity-90' : 'opacity-60'} mb-1 font-bold`}>{date.split('-')[1]}/{date.split('-')[2]}</span>
               <span className="text-lg font-black">D{idx + 1}</span>
               {weather && (
                 <div className="mt-2 flex flex-col items-center">
@@ -267,7 +272,7 @@ const ScheduleView: React.FC = () => {
       </div>
 
       {isYellowknife && prediction && (
-        <Card className="mb-6 bg-gradient-to-br from-[#1a2a6c] to-[#b21f1f] text-white border-0">
+        <Card className="mb-6 bg-gradient-to-br from-[#1a2a6c] to-[#b21f1f] text-white border-0 shadow-xl">
           <div className="flex justify-between items-start">
             <div>
               <p className="text-[10px] opacity-80 uppercase tracking-widest font-black">Aurora Forecast / 極光預測</p>
@@ -281,42 +286,42 @@ const ScheduleView: React.FC = () => {
 
       <div className="flex items-center justify-between mb-6 px-2">
         <div className="flex items-center gap-2">
-           <i className="fa-solid fa-clock-rotate-left text-[#88D8B0] text-xl"></i>
-           <h2 className="text-xl font-black text-[#5D6D7E]">
+           <i className="fa-solid fa-clock-rotate-left text-[#2D8A61] text-xl"></i>
+           <h2 className="text-xl font-black text-[#2C3E50]">
              {selectedDate.split('-')[1]}月{selectedDate.split('-')[2]}日行程
            </h2>
         </div>
         <button 
           onClick={openAddForm}
-          className="w-10 h-10 rounded-full bg-[#88D8B0] text-white flex items-center justify-center soft-shadow active:scale-90 transition-all"
+          className="w-11 h-11 rounded-full bg-[#2D8A61] text-white flex items-center justify-center soft-shadow active:scale-90 transition-all shadow-md"
         >
           <i className="fa-solid fa-plus"></i>
         </button>
       </div>
 
-      <div className="relative ml-4 pl-8 border-l-2 border-dashed border-[#E0E5D5] space-y-6">
+      <div className="relative ml-4 pl-8 border-l-2 border-dashed border-[#D5DBCB] space-y-6">
         {currentItems.length > 0 ? currentItems.map((item, index) => (
           <div key={item.id} className="relative group">
-            <div className="absolute -left-[41px] top-4 w-4 h-4 rounded-full bg-[#88D8B0] border-4 border-[#F7F4EB] z-10"></div>
-            <Card className="p-5 border-0 bg-white relative">
+            <div className="absolute -left-[41px] top-4 w-4 h-4 rounded-full bg-[#2D8A61] border-4 border-[#F7F4EB] z-10"></div>
+            <Card className="p-5 border-0 bg-white relative shadow-md">
               <div className="flex justify-between items-start mb-2">
                 <div className="flex-1 pr-4">
-                  <span className="text-[10px] font-black text-[#88D8B0] uppercase tracking-widest">{item.time}</span>
-                  <h4 className="text-lg font-black text-[#5D6D7E] leading-snug mt-1">{item.location}</h4>
+                  <span className="text-[10px] font-black text-[#2D8A61] uppercase tracking-widest">{item.time}</span>
+                  <h4 className="text-lg font-black text-[#2C3E50] leading-snug mt-1">{item.location}</h4>
                 </div>
                 
                 <div className="flex flex-col gap-1 mr-2">
                    <button 
                     onClick={() => moveItem(index, 'up')}
                     disabled={index === 0}
-                    className="w-6 h-6 rounded-lg bg-gray-50 text-gray-400 flex items-center justify-center text-[10px] disabled:opacity-20 active:scale-90"
+                    className="w-6 h-6 rounded-lg bg-gray-50 text-[#34495E] flex items-center justify-center text-[10px] disabled:opacity-20 active:scale-90 border border-gray-100"
                    >
                      <i className="fa-solid fa-chevron-up"></i>
                    </button>
                    <button 
                     onClick={() => moveItem(index, 'down')}
                     disabled={index === currentItems.length - 1}
-                    className="w-6 h-6 rounded-lg bg-gray-50 text-gray-400 flex items-center justify-center text-[10px] disabled:opacity-20 active:scale-90"
+                    className="w-6 h-6 rounded-lg bg-gray-50 text-[#34495E] flex items-center justify-center text-[10px] disabled:opacity-20 active:scale-90 border border-gray-100"
                    >
                      <i className="fa-solid fa-chevron-down"></i>
                    </button>
@@ -329,22 +334,22 @@ const ScheduleView: React.FC = () => {
               </div>
 
               {item.note && (
-                <div className="mt-3 p-4 bg-gray-50 rounded-2xl border border-gray-100/50">
-                  <p className="text-gray-500 text-[11px] leading-relaxed whitespace-pre-wrap font-medium italic">
-                    <i className="fa-solid fa-quote-left mr-2 opacity-20 text-[#88D8B0]"></i>{item.note}
+                <div className="mt-3 p-4 bg-gray-50 rounded-2xl border border-gray-100/80">
+                  <p className="text-gray-700 text-[11px] leading-relaxed whitespace-pre-wrap font-bold italic">
+                    <i className="fa-solid fa-quote-left mr-2 opacity-30 text-[#2D8A61]"></i>{item.note}
                   </p>
                 </div>
               )}
 
               <div className="flex gap-2 mt-5">
-                <button onClick={() => handleOpenMap(item.location)} className="w-14 h-11 rounded-2xl bg-white border border-[#E0E5D5] text-gray-400 hover:text-[#88D8B0] flex flex-col items-center justify-center">
+                <button onClick={() => handleOpenMap(item.location)} className="w-14 h-11 rounded-2xl bg-white border border-[#D5DBCB] text-[#34495E] hover:text-[#2D8A61] flex flex-col items-center justify-center font-bold">
                   <i className="fa-solid fa-location-arrow text-sm"></i>
                   <span className="text-[7px] font-black uppercase mt-0.5">Map</span>
                 </button>
-                <button onClick={() => openEditForm(item)} className="flex-1 h-11 rounded-2xl bg-white border border-[#E0E5D5] text-gray-400 text-[10px] font-black uppercase tracking-widest hover:text-[#88D8B0] flex items-center justify-center gap-2">
+                <button onClick={() => openEditForm(item)} className="flex-1 h-11 rounded-2xl bg-white border border-[#D5DBCB] text-[#34495E] text-[10px] font-black uppercase tracking-widest hover:text-[#2D8A61] flex items-center justify-center gap-2">
                   <i className="fa-solid fa-pen text-[10px]"></i> 修改 Edit
                 </button>
-                <button onClick={() => handleDelete(item.id)} className="w-11 h-11 rounded-2xl bg-rose-50 text-rose-400 border border-rose-100 flex items-center justify-center hover:bg-rose-100">
+                <button onClick={() => handleDelete(item.id)} className="w-11 h-11 rounded-2xl bg-rose-50 text-rose-500 border border-rose-200 flex items-center justify-center hover:bg-rose-100 transition-colors">
                   <i className="fa-solid fa-trash-can"></i>
                 </button>
               </div>
@@ -353,17 +358,17 @@ const ScheduleView: React.FC = () => {
         )) : (
           <div className="text-center py-12 opacity-30">
             <i className="fa-solid fa-moon text-5xl mb-3"></i>
-            <p className="font-black text-sm uppercase tracking-widest">No Itinerary Planned<br/>今日無排定行程</p>
+            <p className="font-black text-sm uppercase tracking-widest text-[#2C3E50]">No Itinerary Planned<br/>今日無排定行程</p>
           </div>
         )}
       </div>
 
       {isFormOpen && (
-        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] flex items-end justify-center">
-          <div className="bg-white w-full max-w-md rounded-t-[40px] p-8 animate-in slide-in-from-bottom-full duration-300">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] flex items-end justify-center">
+          <div className="bg-white w-full max-w-md rounded-t-[40px] p-8 animate-in slide-in-from-bottom-full duration-300 shadow-2xl">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-black text-[#5D6D7E]">{editingItem ? '修改行程' : '新增行程'}</h3>
-              <button onClick={resetForm} className="text-gray-400 hover:text-gray-600">
+              <h3 className="text-xl font-black text-[#2C3E50]">{editingItem ? '修改行程' : '新增行程'}</h3>
+              <button onClick={resetForm} className="text-gray-400 hover:text-gray-600 transition-colors">
                 <i className="fa-solid fa-xmark text-xl"></i>
               </button>
             </div>
@@ -371,12 +376,12 @@ const ScheduleView: React.FC = () => {
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Time 時間</label>
-                  <input type="time" value={time} onChange={e => setTime(e.target.value)} className="w-full bg-gray-50 border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 focus:ring-[#88D8B0] outline-none" />
+                  <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block mb-1">Time 時間</label>
+                  <input type="time" value={time} onChange={e => setTime(e.target.value)} className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm font-bold focus:ring-2 focus:ring-[#2D8A61] outline-none" />
                 </div>
                 <div>
-                  <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Category 類別</label>
-                  <select value={category} onChange={e => setCategory(e.target.value as Category)} className="w-full bg-gray-50 border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 focus:ring-[#88D8B0] outline-none">
+                  <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block mb-1">Category 類別</label>
+                  <select value={category} onChange={e => setCategory(e.target.value as Category)} className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm font-bold focus:ring-2 focus:ring-[#2D8A61] outline-none">
                     {Object.values(Category).map(cat => (
                       <option key={cat} value={cat}>{cat}</option>
                     ))}
@@ -384,14 +389,14 @@ const ScheduleView: React.FC = () => {
                 </div>
               </div>
               <div>
-                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Location 地點</label>
-                <input type="text" value={location} onChange={e => setLocation(e.target.value)} placeholder="例如：溫哥華機場" className="w-full bg-gray-50 border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 focus:ring-[#88D8B0] outline-none" />
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block mb-1">Location 地點</label>
+                <input type="text" value={location} onChange={e => setLocation(e.target.value)} placeholder="例如：溫哥華機場" className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm font-bold focus:ring-2 focus:ring-[#2D8A61] outline-none" />
               </div>
               <div>
-                <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest block mb-1">Note 備註</label>
-                <textarea value={note} onChange={e => setNote(e.target.value)} placeholder="輸入行程細節..." className="w-full bg-gray-50 border-none rounded-2xl p-4 text-sm font-bold focus:ring-2 focus:ring-[#88D8B0] outline-none h-24 resize-none" />
+                <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block mb-1">Note 備註</label>
+                <textarea value={note} onChange={e => setNote(e.target.value)} placeholder="輸入行程細節..." className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm font-bold focus:ring-2 focus:ring-[#2D8A61] outline-none h-24 resize-none" />
               </div>
-              <button onClick={handleSave} className="w-full bg-[#88D8B0] text-white py-4 rounded-3xl font-black uppercase tracking-widest soft-shadow active:scale-95 transition-all mt-4">
+              <button onClick={handleSave} className="w-full bg-[#2D8A61] text-white py-4 rounded-3xl font-black uppercase tracking-widest soft-shadow active:scale-95 transition-all mt-4 shadow-lg">
                 儲存行程 Save
               </button>
             </div>

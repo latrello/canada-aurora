@@ -62,23 +62,35 @@ const AIChatView: React.FC = () => {
       
       <div 
         ref={scrollRef}
-        className="flex-1 overflow-y-auto no-scrollbar space-y-4 px-2 py-4"
+        className="flex-1 overflow-y-auto no-scrollbar space-y-5 px-2 py-4"
       >
         {messages.map((msg) => (
           <div 
             key={msg.id} 
             className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
           >
-            <div className={`max-w-[85%] rounded-[24px] px-5 py-3 shadow-sm ${
+            <div className={`max-w-[85%] rounded-[28px] px-5 py-3.5 shadow-md ${
               msg.role === 'user' 
-                ? 'bg-[#88D8B0] text-white rounded-tr-none' 
-                : 'bg-white text-[#5D6D7E] border border-[#E0E5D5] rounded-tl-none'
+                ? 'bg-[#2D8A61] text-white rounded-tr-none' 
+                : 'bg-white text-[#2C3E50] border border-[#E0E5D5] rounded-tl-none'
             }`}>
-              <p className="text-sm font-medium">{msg.text}</p>
+              <p className="text-sm font-bold leading-relaxed">{msg.text}</p>
+              <p className={`text-[9px] mt-1.5 font-black opacity-50 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
+                {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+              </p>
             </div>
           </div>
         ))}
-        {isLoading && <div className="text-[10px] text-gray-400 px-4">AI 正在思考中...</div>}
+        {isLoading && (
+          <div className="flex justify-start">
+             <div className="bg-white border border-[#E0E5D5] rounded-[24px] rounded-tl-none px-5 py-3 shadow-sm flex items-center gap-2">
+                <div className="w-1.5 h-1.5 bg-[#2D8A61] rounded-full animate-bounce"></div>
+                <div className="w-1.5 h-1.5 bg-[#2D8A61] rounded-full animate-bounce [animation-delay:0.2s]"></div>
+                <div className="w-1.5 h-1.5 bg-[#2D8A61] rounded-full animate-bounce [animation-delay:0.4s]"></div>
+                <span className="text-[10px] text-gray-400 font-bold uppercase tracking-widest ml-1">AI Thinking...</span>
+             </div>
+          </div>
+        )}
       </div>
 
       <div className="mt-4 px-2">
@@ -88,13 +100,15 @@ const AIChatView: React.FC = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-            placeholder="輸入問題..."
-            className="flex-1 bg-transparent border-none outline-none px-4 text-sm font-bold text-[#5D6D7E]"
+            placeholder="輸入問題或攝影技巧..."
+            className="flex-1 bg-transparent border-none outline-none px-4 text-sm font-black text-[#2C3E50]"
           />
           <button 
             onClick={handleSend}
             disabled={!input.trim() || isLoading}
-            className="w-12 h-12 rounded-full bg-[#88D8B0] text-white flex items-center justify-center transition-all active:scale-90"
+            className={`w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 ${
+              input.trim() && !isLoading ? 'bg-[#2D8A61] text-white shadow-lg' : 'bg-gray-100 text-gray-300'
+            }`}
           >
             <i className="fa-solid fa-paper-plane text-sm"></i>
           </button>
