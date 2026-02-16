@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, SectionTitle, Button } from './UIProvider';
 import { Category, ScheduleItem } from './types';
@@ -38,64 +37,24 @@ const initialScheduleData: Record<string, ScheduleItem[]> = {
     { id: '19-3', time: '19:30', location: '加拿大廣場 Canada Place', category: Category.SCENERY, note: '欣賞夜景回民宿 \n Enjoy the night view' }
   ],
   '2024-02-20': [
-    { id: '20-1', time: '07:00', location: '出門 (Lyft or 捷運)', category: Category.TRANSPORT, note: '預估車費 $40-50 \n Estimated fare: Uber $50 / Lyft $40' },
-    { id: '20-2', time: '09:00', location: 'BC Ferries 渡輪 (Tsawwassen to Victoria)', category: Category.TRANSPORT, note: '船程 1.5hr。開船前 60~30 分鐘報到 \n Check-in 30-60 mins before. Departure at 9:00 AM' },
-    { id: '20-3', time: '11:40', location: '碼頭公車站 (Bus 70/72)', category: Category.TRANSPORT, note: '前往維多利亞市中心，約半小時 \n Bus 70 is faster, Bus 72 slower. Fare $2.5' },
-    { id: '20-4', time: '12:30', location: '維多利亞唐人街 & 番攤巷', category: Category.SCENERY, note: '第一站：維多利亞唐人街 (Victoria Chinatown) \n 第二站：番攤巷 (Fan Tan Alley)' },
-    { id: '20-5', time: '14:00', location: '內港步道 & 卑詩省議會大廈', category: Category.SCENERY, note: '第三站：內港步道 (Inner Harbour) \n 第四站：卑詩省議會大廈 (BC Legislative Assembly)' },
-    { id: '20-6', time: '16:00', location: '維多利亞漁人碼頭', category: Category.FOOD, note: '第五站：漁人碼頭 (Fisherman\'s Wharf) \n 推薦炸魚薯條' },
-    { id: '20-7', time: '17:30', location: '搭乘公車返回碼頭', category: Category.TRANSPORT, note: '17:30~18:10 (bus)' },
-    { id: '20-8', time: '19:00', location: 'BC Ferries 渡輪 (Victoria to Tsawwassen)', category: Category.TRANSPORT, note: '船程 1.5hr。19:00~20:35 \n Return trip to Vancouver' },
-    { id: '20-9', time: '21:00', location: 'Lyft 回家', category: Category.TRANSPORT }
-  ],
-  '2024-02-21': [
-    { id: '21-1', time: '10:00', location: '格蘭維爾島市場 Granville Island Public Market', category: Category.SCENERY, note: '必喝蛤蜊酥皮濃湯 \n Clam Chowder is a must-try' },
-    { id: '21-2', time: '16:30', location: '夕陽海灘 Sunset Beach Vancouver', category: Category.SCENERY },
-    { id: '21-3', time: '19:00', location: '史丹利公園 Stanley Park', category: Category.SCENERY, note: '騎單車環繞海堤 \n Cycling around the Seawall' }
-  ],
-  '2024-02-22': [
-    { id: '22-1', time: '09:00', location: '北溫碼頭 Lonsdale Quay Market', category: Category.SCENERY, note: '市場開放時間 09:00-19:00 \n Market opens from 09:00-19:00' },
-    { id: '22-2', time: '12:30', location: '加拿大廣場 Canada Place', category: Category.SCENERY, note: '搭乘海上巴士 (SeaBus) 從市中心 Waterfront Station 過來只要 12 分鐘 \n 12-min SeaBus ride from Waterfront Station' }
-  ],
-  '2024-02-23': [
-    { id: '23-1', time: '09:00', location: '海天公路 Sea to Sky Highway', category: Category.SCENERY, note: '經馬蹄灣、波特灣省立公園 \n Via Horseshoe Bay & Porteau Cove' },
-    { id: '23-2', time: '11:00', location: '海天纜車 Sea to Sky Gondola', category: Category.SCENERY },
-    { id: '23-3', time: '14:00', location: '威斯勒 Whistler', category: Category.SCENERY, note: 'Excalibur Gondola 纜車免費。注意：纜車需出發 72 小時前預訂 \n Excalibur Gondola is free. Must book 72hrs in advance' },
-    { id: '23-4', time: '18:00', location: 'Vallea Lumina', category: Category.SCENERY, note: '夜間燈光秀體驗，優惠碼：WINTER15 \n Night light show, Promo code: WINTER15' }
+    { id: '20-1', time: '07:00', location: '出門 (Lyft or 捷運)', category: Category.TRANSPORT, note: '預估車費 $40-50' },
+    { id: '20-2', time: '09:00', location: 'BC Ferries 渡輪 (Tsawwassen to Victoria)', category: Category.TRANSPORT },
+    { id: '20-3', time: '12:30', location: '維多利亞唐人街 & 番攤巷', category: Category.SCENERY },
+    { id: '20-4', time: '16:00', location: '維多利亞漁人碼頭', category: Category.FOOD, note: '推薦炸魚薯條' }
   ],
   '2024-02-24': [
-    { id: '24-1', time: '15:45', location: '溫哥華機場 (國內線) Vancouver Int. Airport (YVR)', category: Category.TRANSPORT, note: '飛往黃刀鎮 \n Fly to Yellowknife (YZF)' },
-    { id: '24-2', time: '20:57', location: '抵達黃刀鎮 Arrival at Yellowknife', category: Category.TRANSPORT },
-    { id: '24-3', time: '22:00', location: '黃刀鎮 追極光之旅 Yellowknife Aurora Hunting', category: Category.SCENERY, note: '第一晚追極光 \n First night aurora hunting' }
-  ],
-  '2024-02-25': [
-    { id: '25-1', time: '10:00', location: '黃刀鎮 TOUR (Yellowknife City Tour)', category: Category.SCENERY, note: '10:00~12:00 黃刀鎮市區觀光 \n Yellowknife City Tour' },
-    { id: '25-2', time: '22:00', location: '夢幻小屋極光之旅 (Aurora Viewing at Dream Cabin)', category: Category.SCENERY, note: '22:00~02:00 追極光 \n Aurora viewing experience' }
-  ],
-  '2024-02-26': [
-    { id: '26-1', time: '14:00', location: '狗拉雪橇 + 雪鞋健行 (Dog Sledding & Snowshoeing)', category: Category.SCENERY, note: '14:00~15:00 體驗傳統冬季活動 \n Traditional winter activities' },
-    { id: '26-2', time: '20:50', location: 'Aurora Village 極光村追光之旅', category: Category.SCENERY, note: '20:50~01:00 夢幻追光之旅 \n Aurora hunting at the village' }
-  ],
-  '2024-02-27': [
-    { id: '27-1', time: '11:00', location: '退房 Nova Inn (Check out Nova Inn)', category: Category.STAY },
-    { id: '27-2', time: '14:00', location: '冰洞徒步之旅 (Ice Cave Hiking Tour)', category: Category.SCENERY, note: '14:00~16:00 冰洞探險 \n Ice cave exploration' },
-    { id: '27-3', time: '16:00', location: '辦理入住 探索者飯店 (Check in The Explorer Hotel)', category: Category.STAY }
-  ],
-  '2024-02-28': [
-    { id: '28-1', time: '05:25', location: '黃刀鎮機場 Yellowknife Airport (YZF)', category: Category.TRANSPORT, note: '飛往溫哥華 \n Fly back to Vancouver' },
-    { id: '28-2', time: '11:00', location: '亞瑟格蘭名牌奧特萊斯 McArthurGlen Designer Outlet', category: Category.SCENERY, note: '最後採買 \n Final shopping spree' }
-  ],
-  '2024-03-01': [
-    { id: '01-1', time: '10:00', location: '溫哥華市中心 Vancouver Downtown', category: Category.SCENERY, note: '市區最後巡禮 \n City final tour' }
-  ],
-  '2024-03-02': [
-    { id: '02-1', time: '02:15', location: '溫哥華國際機場 Vancouver Int. Airport (YVR)', category: Category.TRANSPORT, note: '搭乘 BR009 返回台灣 \n Take EVA Air BR009 back to TPE' }
+    { id: '24-1', time: '15:45', location: '溫哥華機場 (國內線)', category: Category.TRANSPORT, note: '飛往黃刀鎮 (YZF)' },
+    { id: '24-3', time: '22:00', location: '追極光之旅 Yellowknife Aurora Hunting', category: Category.SCENERY }
   ]
 };
 
 const ScheduleView: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState('2024-02-18');
-  const [scheduleData, setScheduleData] = useState(initialScheduleData);
+  const [scheduleData, setScheduleData] = useState<Record<string, ScheduleItem[]>>(() => {
+    const saved = localStorage.getItem('aurora_trip_schedule');
+    return saved ? JSON.parse(saved) : initialScheduleData;
+  });
+  
   const [prediction, setPrediction] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -109,6 +68,10 @@ const ScheduleView: React.FC = () => {
   const sortedDates = Object.keys(weatherDataMap).sort();
   const currentItems = (scheduleData[selectedDate] || []);
   const isYellowknife = ['2024-02-24', '2024-02-25', '2024-02-26', '2024-02-27'].includes(selectedDate);
+
+  useEffect(() => {
+    localStorage.setItem('aurora_trip_schedule', JSON.stringify(scheduleData));
+  }, [scheduleData]);
 
   useEffect(() => {
     if (isYellowknife) {
@@ -133,11 +96,7 @@ const ScheduleView: React.FC = () => {
     setIsFormOpen(false);
   };
 
-  const openAddForm = () => {
-    resetForm();
-    setIsFormOpen(true);
-  };
-
+  // Added openEditForm to fix the error in ScheduleView.tsx
   const openEditForm = (item: ScheduleItem) => {
     setEditingItem(item);
     setTime(item.time);
@@ -158,28 +117,32 @@ const ScheduleView: React.FC = () => {
       note
     };
 
-    const updated = { ...scheduleData };
-    if (!updated[selectedDate]) updated[selectedDate] = [];
-
-    if (editingItem) {
-      updated[selectedDate] = updated[selectedDate].map(item => item.id === editingItem.id ? newItem : item);
-    } else {
-      updated[selectedDate] = [...updated[selectedDate], newItem];
-    }
-
-    setScheduleData(updated);
+    setScheduleData(prev => {
+      const updated = { ...prev };
+      if (!updated[selectedDate]) updated[selectedDate] = [];
+      if (editingItem) {
+        updated[selectedDate] = updated[selectedDate].map(item => item.id === editingItem.id ? newItem : item);
+      } else {
+        updated[selectedDate] = [...updated[selectedDate], newItem];
+      }
+      return updated;
+    });
     resetForm();
   };
 
-  const handleDelete = (id: string) => {
-    if (confirm('確定要刪除此行程嗎？')) {
-      const updated = { ...scheduleData };
-      updated[selectedDate] = updated[selectedDate].filter(item => item.id !== id);
-      setScheduleData(updated);
+  const handleDelete = (e: React.MouseEvent, id: string) => {
+    e.preventDefault();
+    e.stopPropagation(); // 防止觸發父層點擊
+    if (window.confirm('確定要刪除此行程嗎？')) {
+      setScheduleData(prev => ({
+        ...prev,
+        [selectedDate]: (prev[selectedDate] || []).filter(item => item.id !== id)
+      }));
     }
   };
 
-  const moveItem = (index: number, direction: 'up' | 'down') => {
+  const moveItem = (e: React.MouseEvent, index: number, direction: 'up' | 'down') => {
+    e.stopPropagation();
     const newItems = [...currentItems];
     const targetIndex = direction === 'up' ? index - 1 : index + 1;
     if (targetIndex < 0 || targetIndex >= newItems.length) return;
@@ -188,29 +151,28 @@ const ScheduleView: React.FC = () => {
     newItems[index] = newItems[targetIndex];
     newItems[targetIndex] = temp;
 
-    setScheduleData({ ...scheduleData, [selectedDate]: newItems });
+    setScheduleData(prev => ({ ...prev, [selectedDate]: newItems }));
   };
 
   const shiftDay = (direction: 'left' | 'right') => {
     const currentIndex = sortedDates.indexOf(selectedDate);
     const targetIndex = direction === 'left' ? currentIndex - 1 : currentIndex + 1;
-    
     if (targetIndex < 0 || targetIndex >= sortedDates.length) return;
     
     const targetDate = sortedDates[targetIndex];
     const currentDayContent = scheduleData[selectedDate] || [];
     const targetDayContent = scheduleData[targetDate] || [];
     
-    setScheduleData({
-      ...scheduleData,
+    setScheduleData(prev => ({
+      ...prev,
       [selectedDate]: targetDayContent,
       [targetDate]: currentDayContent
-    });
-    
+    }));
     setSelectedDate(targetDate);
   };
 
-  const handleOpenMap = (loc: string) => {
+  const handleOpenMap = (e: React.MouseEvent, loc: string) => {
+    e.stopPropagation();
     const query = loc.includes('(') ? loc.split('(')[0] : loc;
     window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`, '_blank');
   };
@@ -229,20 +191,10 @@ const ScheduleView: React.FC = () => {
       <div className="flex items-center justify-between mb-4 px-1">
         <SectionTitle title="行程規劃" icon="fa-solid fa-calendar-check" />
         <div className="flex gap-2">
-          <button 
-            onClick={() => shiftDay('left')}
-            disabled={sortedDates.indexOf(selectedDate) === 0}
-            className="w-9 h-9 rounded-full bg-white border border-[#D5DBCB] text-[#34495E] flex items-center justify-center disabled:opacity-30 active:scale-90 transition-all soft-shadow"
-            title="將整日行程往前挪移"
-          >
+          <button onClick={() => shiftDay('left')} disabled={sortedDates.indexOf(selectedDate) === 0} className="w-9 h-9 rounded-full bg-white border border-[#D5DBCB] text-[#34495E] flex items-center justify-center disabled:opacity-30 active:scale-90 transition-all soft-shadow">
             <i className="fa-solid fa-angle-left"></i>
           </button>
-          <button 
-            onClick={() => shiftDay('right')}
-            disabled={sortedDates.indexOf(selectedDate) === sortedDates.length - 1}
-            className="w-9 h-9 rounded-full bg-white border border-[#D5DBCB] text-[#34495E] flex items-center justify-center disabled:opacity-30 active:scale-90 transition-all soft-shadow"
-            title="將整日行程往後挪移"
-          >
+          <button onClick={() => shiftDay('right')} disabled={sortedDates.indexOf(selectedDate) === sortedDates.length - 1} className="w-9 h-9 rounded-full bg-white border border-[#D5DBCB] text-[#34495E] flex items-center justify-center disabled:opacity-30 active:scale-90 transition-all soft-shadow">
             <i className="fa-solid fa-angle-right"></i>
           </button>
         </div>
@@ -253,11 +205,7 @@ const ScheduleView: React.FC = () => {
           const isSelected = selectedDate === date;
           const weather = weatherDataMap[date];
           return (
-            <button
-              key={date}
-              onClick={() => setSelectedDate(date)}
-              className={`flex-shrink-0 w-16 h-24 rounded-3xl flex flex-col items-center justify-center transition-all ${isSelected ? 'bg-[#2D8A61] text-white soft-shadow scale-105 shadow-lg' : 'bg-white text-gray-500 border border-[#E0E5D5]'}`}
-            >
+            <button key={date} onClick={() => setSelectedDate(date)} className={`flex-shrink-0 w-16 h-24 rounded-3xl flex flex-col items-center justify-center transition-all ${isSelected ? 'bg-[#2D8A61] text-white shadow-lg scale-105' : 'bg-white text-gray-500 border border-[#E0E5D5]'}`}>
               <span className={`text-[10px] ${isSelected ? 'opacity-90' : 'opacity-60'} mb-1 font-bold`}>{date.split('-')[1]}/{date.split('-')[2]}</span>
               <span className="text-lg font-black">D{idx + 1}</span>
               {weather && (
@@ -287,14 +235,9 @@ const ScheduleView: React.FC = () => {
       <div className="flex items-center justify-between mb-6 px-2">
         <div className="flex items-center gap-2">
            <i className="fa-solid fa-clock-rotate-left text-[#2D8A61] text-xl"></i>
-           <h2 className="text-xl font-black text-[#2C3E50]">
-             {selectedDate.split('-')[1]}月{selectedDate.split('-')[2]}日行程
-           </h2>
+           <h2 className="text-xl font-black text-[#2C3E50]">{selectedDate.split('-')[1]}月{selectedDate.split('-')[2]}日行程</h2>
         </div>
-        <button 
-          onClick={openAddForm}
-          className="w-11 h-11 rounded-full bg-[#2D8A61] text-white flex items-center justify-center soft-shadow active:scale-90 transition-all shadow-md"
-        >
+        <button onClick={() => setIsFormOpen(true)} className="w-11 h-11 rounded-full bg-[#2D8A61] text-white flex items-center justify-center soft-shadow active:scale-90 shadow-md">
           <i className="fa-solid fa-plus"></i>
         </button>
       </div>
@@ -303,7 +246,7 @@ const ScheduleView: React.FC = () => {
         {currentItems.length > 0 ? currentItems.map((item, index) => (
           <div key={item.id} className="relative group">
             <div className="absolute -left-[41px] top-4 w-4 h-4 rounded-full bg-[#2D8A61] border-4 border-[#F7F4EB] z-10"></div>
-            <Card className="p-5 border-0 bg-white relative shadow-md">
+            <Card className="p-5 border-0 bg-white relative shadow-md transition-all active:bg-gray-50" onClick={() => openEditForm(item)}>
               <div className="flex justify-between items-start mb-2">
                 <div className="flex-1 pr-4">
                   <span className="text-[10px] font-black text-[#2D8A61] uppercase tracking-widest">{item.time}</span>
@@ -311,18 +254,10 @@ const ScheduleView: React.FC = () => {
                 </div>
                 
                 <div className="flex flex-col gap-1 mr-2">
-                   <button 
-                    onClick={() => moveItem(index, 'up')}
-                    disabled={index === 0}
-                    className="w-6 h-6 rounded-lg bg-gray-50 text-[#34495E] flex items-center justify-center text-[10px] disabled:opacity-20 active:scale-90 border border-gray-100"
-                   >
+                   <button onClick={(e) => moveItem(e, index, 'up')} disabled={index === 0} className="w-6 h-6 rounded-lg bg-gray-50 text-[#34495E] flex items-center justify-center text-[10px] disabled:opacity-20 active:scale-90 border border-gray-100">
                      <i className="fa-solid fa-chevron-up"></i>
                    </button>
-                   <button 
-                    onClick={() => moveItem(index, 'down')}
-                    disabled={index === currentItems.length - 1}
-                    className="w-6 h-6 rounded-lg bg-gray-50 text-[#34495E] flex items-center justify-center text-[10px] disabled:opacity-20 active:scale-90 border border-gray-100"
-                   >
+                   <button onClick={(e) => moveItem(e, index, 'down')} disabled={index === currentItems.length - 1} className="w-6 h-6 rounded-lg bg-gray-50 text-[#34495E] flex items-center justify-center text-[10px] disabled:opacity-20 active:scale-90 border border-gray-100">
                      <i className="fa-solid fa-chevron-down"></i>
                    </button>
                 </div>
@@ -342,14 +277,14 @@ const ScheduleView: React.FC = () => {
               )}
 
               <div className="flex gap-2 mt-5">
-                <button onClick={() => handleOpenMap(item.location)} className="w-14 h-11 rounded-2xl bg-white border border-[#D5DBCB] text-[#34495E] hover:text-[#2D8A61] flex flex-col items-center justify-center font-bold">
+                <button onClick={(e) => handleOpenMap(e, item.location)} className="w-14 h-11 rounded-2xl bg-white border border-[#D5DBCB] text-[#34495E] hover:text-[#2D8A61] flex flex-col items-center justify-center font-bold">
                   <i className="fa-solid fa-location-arrow text-sm"></i>
                   <span className="text-[7px] font-black uppercase mt-0.5">Map</span>
                 </button>
-                <button onClick={() => openEditForm(item)} className="flex-1 h-11 rounded-2xl bg-white border border-[#D5DBCB] text-[#34495E] text-[10px] font-black uppercase tracking-widest hover:text-[#2D8A61] flex items-center justify-center gap-2">
+                <button onClick={(e) => { e.stopPropagation(); openEditForm(item); }} className="flex-1 h-11 rounded-2xl bg-white border border-[#D5DBCB] text-[#34495E] text-[10px] font-black uppercase tracking-widest hover:text-[#2D8A61] flex items-center justify-center gap-2">
                   <i className="fa-solid fa-pen text-[10px]"></i> 修改 Edit
                 </button>
-                <button onClick={() => handleDelete(item.id)} className="w-11 h-11 rounded-2xl bg-rose-50 text-rose-500 border border-rose-200 flex items-center justify-center hover:bg-rose-100 transition-colors">
+                <button type="button" onClick={(e) => handleDelete(e, item.id)} className="w-11 h-11 rounded-2xl bg-rose-50 text-rose-500 border border-rose-200 flex items-center justify-center hover:bg-rose-100 transition-colors shadow-sm active:scale-90">
                   <i className="fa-solid fa-trash-can"></i>
                 </button>
               </div>
@@ -357,7 +292,7 @@ const ScheduleView: React.FC = () => {
           </div>
         )) : (
           <div className="text-center py-12 opacity-30">
-            <i className="fa-solid fa-moon text-5xl mb-3"></i>
+            <i className="fa-solid fa-moon text-5xl mb-3 text-[#2C3E50]"></i>
             <p className="font-black text-sm uppercase tracking-widest text-[#2C3E50]">No Itinerary Planned<br/>今日無排定行程</p>
           </div>
         )}
@@ -372,7 +307,6 @@ const ScheduleView: React.FC = () => {
                 <i className="fa-solid fa-xmark text-xl"></i>
               </button>
             </div>
-            
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -382,9 +316,7 @@ const ScheduleView: React.FC = () => {
                 <div>
                   <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block mb-1">Category 類別</label>
                   <select value={category} onChange={e => setCategory(e.target.value as Category)} className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm font-bold focus:ring-2 focus:ring-[#2D8A61] outline-none">
-                    {Object.values(Category).map(cat => (
-                      <option key={cat} value={cat}>{cat}</option>
-                    ))}
+                    {Object.values(Category).map(cat => <option key={cat} value={cat}>{cat}</option>)}
                   </select>
                 </div>
               </div>
@@ -396,7 +328,7 @@ const ScheduleView: React.FC = () => {
                 <label className="text-[10px] font-black text-gray-500 uppercase tracking-widest block mb-1">Note 備註</label>
                 <textarea value={note} onChange={e => setNote(e.target.value)} placeholder="輸入行程細節..." className="w-full bg-gray-50 border border-gray-200 rounded-2xl p-4 text-sm font-bold focus:ring-2 focus:ring-[#2D8A61] outline-none h-24 resize-none" />
               </div>
-              <button onClick={handleSave} className="w-full bg-[#2D8A61] text-white py-4 rounded-3xl font-black uppercase tracking-widest soft-shadow active:scale-95 transition-all mt-4 shadow-lg">
+              <button onClick={handleSave} className="w-full bg-[#2D8A61] text-white py-4 rounded-3xl font-black uppercase tracking-widest active:scale-95 transition-all mt-4 shadow-lg hover:brightness-110">
                 儲存行程 Save
               </button>
             </div>
