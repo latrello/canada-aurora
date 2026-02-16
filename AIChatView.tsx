@@ -15,7 +15,7 @@ const AIChatView: React.FC = () => {
     {
       id: 'welcome',
       role: 'ai',
-      text: '你好！我是你的極光之旅 AI 小助手。無論是行程規劃、天氣查詢還是極光攝影技巧，我都能為你解答。想問點什麼嗎？',
+      text: '你好！我是你的極光之旅 AI 小助手。有什麼關於加拿大行程或極光攝影的問題想問我嗎？',
       timestamp: new Date()
     }
   ]);
@@ -74,24 +74,11 @@ const AIChatView: React.FC = () => {
                 ? 'bg-[#88D8B0] text-white rounded-tr-none' 
                 : 'bg-white text-[#5D6D7E] border border-[#E0E5D5] rounded-tl-none'
             }`}>
-              <p className="text-sm leading-relaxed font-medium">{msg.text}</p>
-              <p className={`text-[8px] mt-1 font-black opacity-40 ${msg.role === 'user' ? 'text-right' : 'text-left'}`}>
-                {msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-              </p>
+              <p className="text-sm font-medium">{msg.text}</p>
             </div>
           </div>
         ))}
-        {isLoading && (
-          <div className="flex justify-start">
-            <div className="bg-white border border-[#E0E5D5] rounded-[24px] rounded-tl-none px-5 py-3 shadow-sm">
-              <div className="flex gap-1">
-                <div className="w-1.5 h-1.5 bg-[#88D8B0] rounded-full animate-bounce"></div>
-                <div className="w-1.5 h-1.5 bg-[#88D8B0] rounded-full animate-bounce [animation-delay:0.2s]"></div>
-                <div className="w-1.5 h-1.5 bg-[#88D8B0] rounded-full animate-bounce [animation-delay:0.4s]"></div>
-              </div>
-            </div>
-          </div>
-        )}
+        {isLoading && <div className="text-[10px] text-gray-400 px-4">AI 正在思考中...</div>}
       </div>
 
       <div className="mt-4 px-2">
@@ -101,15 +88,13 @@ const AIChatView: React.FC = () => {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-            placeholder="問問 AI 關於極光行程的問題..."
+            placeholder="輸入問題..."
             className="flex-1 bg-transparent border-none outline-none px-4 text-sm font-bold text-[#5D6D7E]"
           />
           <button 
             onClick={handleSend}
             disabled={!input.trim() || isLoading}
-            className={`w-12 h-12 rounded-full flex items-center justify-center transition-all active:scale-90 ${
-              input.trim() && !isLoading ? 'bg-[#88D8B0] text-white' : 'bg-gray-100 text-gray-300'
-            }`}
+            className="w-12 h-12 rounded-full bg-[#88D8B0] text-white flex items-center justify-center transition-all active:scale-90"
           >
             <i className="fa-solid fa-paper-plane text-sm"></i>
           </button>

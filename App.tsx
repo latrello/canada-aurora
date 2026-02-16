@@ -5,8 +5,6 @@ import BookingView from './BookingView';
 import ExpenseView from './ExpenseView';
 import ExchangeView from './ExchangeView';
 import AIChatView from './AIChatView';
-import JournalView from './JournalView';
-import PlanningView from './PlanningView';
 
 const App: React.FC = () => {
   const [activeTab, setActiveTab] = useState('schedule');
@@ -16,8 +14,6 @@ const App: React.FC = () => {
       case 'schedule': return <ScheduleView />;
       case 'booking': return <BookingView />;
       case 'expense': return <ExpenseView />;
-      case 'journal': return <JournalView />;
-      case 'planning': return <PlanningView />;
       case 'exchange': return <ExchangeView />;
       case 'ai': return <AIChatView />;
       default: return <ScheduleView />;
@@ -28,8 +24,6 @@ const App: React.FC = () => {
     { id: 'schedule', icon: 'fa-calendar-days', label: '行程' },
     { id: 'booking', icon: 'fa-ticket', label: '預訂' },
     { id: 'expense', icon: 'fa-coins', label: '記帳' },
-    { id: 'journal', icon: 'fa-camera', label: '日誌' },
-    { id: 'planning', icon: 'fa-list-check', label: '準備' },
     { id: 'exchange', icon: 'fa-calculator', label: '匯率' },
     { id: 'ai', icon: 'fa-wand-magic-sparkles', label: 'AI' },
   ];

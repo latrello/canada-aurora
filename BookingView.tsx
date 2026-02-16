@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { Card, SectionTitle, Button } from './UIProvider';
+import React from 'react';
+import { Card, SectionTitle } from './UIProvider';
 
 const FlightCard: React.FC<{
   flightNo: string;
@@ -12,8 +12,8 @@ const FlightCard: React.FC<{
   departureTime: string;
   arrivalTime: string;
   duration: string;
-  boarding: string;
-  gate: string;
+  boarding?: string;
+  gate?: string;
   type: 'intl' | 'return' | 'domestic';
 }> = ({ flightNo, fromCode, fromName, toCode, toName, date, departureTime, arrivalTime, duration, boarding, gate, type }) => {
   const themes = {
@@ -25,7 +25,7 @@ const FlightCard: React.FC<{
   const isDark = type !== 'domestic';
 
   return (
-    <div className="relative group perspective-1000">
+    <div className="relative group perspective-1000 mb-4">
       <div className={`relative rounded-[32px] p-6 soft-shadow transition-all duration-500 hover:-translate-y-1 hover:rotate-1 active:scale-95 cursor-pointer overflow-hidden ${themes[type]}`}>
         {isDark && (
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] pointer-events-none" />
@@ -42,7 +42,7 @@ const FlightCard: React.FC<{
           </div>
           <div className="text-right">
             <span className={`px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest ${isDark ? 'bg-white/20' : 'bg-gray-100 text-gray-400'}`}>
-              {type === 'intl' ? 'First Leg' : type === 'return' ? 'Final Leg' : 'Domestic'}
+              {type === 'intl' ? '去程' : type === 'return' ? '回程' : '國內線'}
             </span>
           </div>
         </div>
@@ -55,7 +55,7 @@ const FlightCard: React.FC<{
           </div>
           <div className="flex-1 flex flex-col items-center px-4 mb-4">
             <div className={`relative w-full h-[2px] ${isDark ? 'bg-white/20' : 'bg-gray-100'}`}>
-              <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-2 ${isDark ? 'bg-[#1a2a6c]' : 'bg-white'}`}>
+              <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-2 ${isDark ? (type === 'return' ? 'bg-[#4a5a6a]' : 'bg-[#1a2a6c]') : 'bg-white'}`}>
                 <i className={`fa-solid fa-plane-up text-[12px] ${isDark ? 'text-white/40' : 'text-gray-300'}`}></i>
               </div>
             </div>
@@ -71,11 +71,11 @@ const FlightCard: React.FC<{
         <div className="grid grid-cols-3 gap-2 text-center">
           <div className={`p-2 rounded-2xl ${isDark ? 'bg-white/5' : 'bg-gray-50'}`}>
             <p className={`text-[8px] font-black uppercase mb-1 ${isDark ? 'opacity-40' : 'text-gray-300'}`}>Boarding</p>
-            <p className="text-xs font-black tracking-wider">{boarding}</p>
+            <p className="text-xs font-black tracking-wider">{boarding || '--:--'}</p>
           </div>
           <div className={`p-2 rounded-2xl ${isDark ? 'bg-white/5' : 'bg-gray-50'}`}>
             <p className={`text-[8px] font-black uppercase mb-1 ${isDark ? 'opacity-40' : 'text-gray-300'}`}>Gate</p>
-            <p className="text-xs font-black tracking-wider">{gate}</p>
+            <p className="text-xs font-black tracking-wider">{gate || '--'}</p>
           </div>
           <div className={`p-2 rounded-2xl ${isDark ? 'bg-white/5' : 'bg-gray-50'}`}>
             <p className={`text-[8px] font-black uppercase mb-1 ${isDark ? 'opacity-40' : 'text-gray-300'}`}>Date</p>
@@ -106,6 +106,7 @@ const StayCard: React.FC<{
     'yk-nova': 'bg-[#F0F7FD] border-[#D5E1E5]',
     'yk-explorer': 'bg-[#FCF5FD] border-[#E5D5E1]'
   };
+
   const accentColors = {
     van: 'text-amber-500',
     'yk-nova': 'text-blue-500',
@@ -113,8 +114,8 @@ const StayCard: React.FC<{
   };
 
   return (
-    <div className="group active:scale-[0.98] transition-all">
-      <Card className={`${themes[theme]} border-2 border-dashed p-6 relative overflow-hidden mb-4`}>
+    <div className="group active:scale-[0.98] transition-all mb-4">
+      <Card className={`${themes[theme]} border-2 border-dashed p-6 relative overflow-hidden`}>
         <div className="flex justify-between items-start mb-4">
           <div>
             <div className="flex items-center gap-1 mb-1">
@@ -129,10 +130,12 @@ const StayCard: React.FC<{
             已確認
           </span>
         </div>
+
         <div className="flex justify-between items-center bg-white/50 backdrop-blur-sm rounded-2xl p-4 mb-4 border border-white">
           <div className="text-center">
             <p className="text-[10px] text-gray-400 font-black uppercase mb-1">入住</p>
             <p className="text-sm font-black text-[#5D6D7E]">{checkIn}</p>
+            <p className="text-[10px] font-bold text-gray-400">{checkInTime}</p>
           </div>
           <div className="bg-gray-100 px-3 py-1 rounded-full text-[10px] font-black text-gray-400">
             {nights} 晚
@@ -140,16 +143,24 @@ const StayCard: React.FC<{
           <div className="text-center">
             <p className="text-[10px] text-gray-400 font-black uppercase mb-1">退房</p>
             <p className="text-sm font-black text-[#5D6D7E]">{checkOut}</p>
+            <p className="text-[10px] font-bold text-gray-400">{checkOutTime}</p>
           </div>
         </div>
+
         <div className="space-y-3">
           <div className="flex items-start gap-3">
             <i className={`fa-solid fa-location-dot mt-1 ${accentColors[theme]}`}></i>
             <p className="text-xs text-gray-500 font-medium leading-relaxed">{address}</p>
           </div>
           <div className="flex justify-between items-center pt-3 border-t border-gray-100">
-            <p className="text-xs font-mono font-bold text-gray-500">{bookingId}</p>
-            <p className={`text-lg font-black ${accentColors[theme]}`}>{price}</p>
+            <div>
+              <p className="text-[10px] text-gray-400 font-black uppercase">訂單編號</p>
+              <p className="text-xs font-mono font-bold text-gray-500">{bookingId}</p>
+            </div>
+            <div className="text-right">
+              <p className="text-[10px] text-gray-400 font-black uppercase">支付總額</p>
+              <p className={`text-lg font-black ${accentColors[theme]}`}>NT {price}</p>
+            </div>
           </div>
         </div>
       </Card>
@@ -158,56 +169,128 @@ const StayCard: React.FC<{
 };
 
 const BookingView: React.FC = () => {
-  const [isLocked, setIsLocked] = useState(true);
-  const [pin, setPin] = useState('');
-
-  const handleUnlock = () => {
-    if (pin === '007') {
-      setIsLocked(false);
-    } else {
-      alert('PIN 碼錯誤！(提示：007)');
-      setPin('');
-    }
-  };
-
-  if (isLocked) {
-    return (
-      <div className="flex flex-col items-center justify-center py-20 animate-in fade-in zoom-in duration-500">
-        <div className="w-20 h-20 rounded-3xl bg-white soft-shadow flex items-center justify-center mb-6">
-          <i className="fa-solid fa-lock text-3xl text-[#88D8B0]"></i>
-        </div>
-        <h2 className="text-xl font-black text-[#5D6D7E] mb-2">隱私保護</h2>
-        <p className="text-xs text-gray-400 font-bold mb-8">請輸入 PIN 碼查看預訂細節</p>
-        <div className="flex gap-4 mb-8">
-          {[1, 2, 3].map(i => (
-            <div key={i} className={`w-4 h-4 rounded-full border-2 border-[#88D8B0] ${pin.length >= i ? 'bg-[#88D8B0]' : ''}`}></div>
-          ))}
-        </div>
-        <div className="grid grid-cols-3 gap-4">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 'C', 0, '✓'].map(n => (
-            <button key={n.toString()} onClick={() => {
-              if (n === 'C') setPin('');
-              else if (n === '✓') handleUnlock();
-              else if (pin.length < 3) setPin(p => p + n);
-            }} className="w-16 h-16 rounded-2xl bg-white soft-shadow font-black text-lg text-[#5D6D7E] active:scale-90 transition-all">
-              {n}
-            </button>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="pb-24 space-y-8">
+    <div className="pb-24 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
       <div>
-        <SectionTitle title="國際航段 (去程)" icon="fa-solid fa-plane-departure" />
-        <FlightCard type="intl" flightNo="BR 10" fromCode="TPE" fromName="Taipei Taoyuan" toCode="YVR" toName="Vancouver Int." date="FEB 18" departureTime="23:55" arrivalTime="18:35" duration="12h 45m" boarding="23:15" gate="D3" />
+        <SectionTitle title="國際航線預訂" icon="fa-solid fa-plane-departure" />
+        <FlightCard 
+          type="intl"
+          flightNo="BR 010 (長榮航空)"
+          fromCode="TPE"
+          fromName="台灣桃園國際機場 T2"
+          toCode="YVR"
+          toName="溫哥華國際機場 M"
+          date="2026/02/18 (週三)"
+          departureTime="23:55"
+          arrivalTime="18:35"
+          duration="10小時40分"
+          boarding="23:15"
+          gate="T2"
+        />
+        <FlightCard 
+          type="return"
+          flightNo="BR 009 (長榮航空)"
+          fromCode="YVR"
+          fromName="溫哥華國際機場 M"
+          toCode="TPE"
+          toName="台灣桃園國際機場 T2"
+          date="2026/03/01 (週日)"
+          departureTime="00:15"
+          arrivalTime="05:15 (+1)"
+          duration="13小時00分"
+          boarding="23:45 (2/28)"
+          gate="M"
+        />
       </div>
+
       <div>
-        <SectionTitle title="住宿預訂" icon="fa-solid fa-hotel" />
-        <StayCard theme="van" name="溫哥華市中心三房公寓" subName="LXY Condo" stars={3} checkIn="2026/02/18" checkOut="2026/02/24" nights={6} address="179 Keefer Place, Vancouver" bookingId="16163234" price="$31,139" checkInTime="14:00" checkOutTime="10:00" />
+        <SectionTitle title="國內航線預訂" icon="fa-solid fa-plane-up" />
+        <FlightCard 
+          type="domestic"
+          flightNo="AC (加拿大航空)"
+          fromCode="YVR"
+          fromName="溫哥華國際機場"
+          toCode="YZF"
+          toName="黃刀機場"
+          date="02/24 (週二)"
+          departureTime="15:45"
+          arrivalTime="20:57"
+          duration="4小時12分 (1停點)"
+          boarding="15:15"
+          gate="--"
+        />
+        <FlightCard 
+          type="domestic"
+          flightNo="AC (加拿大航空)"
+          fromCode="YZF"
+          fromName="黃刀機場"
+          toCode="YVR"
+          toName="溫哥華國際機場"
+          date="02/28 (週六)"
+          departureTime="05:25"
+          arrivalTime="07:17"
+          duration="2小時52分 (直飛)"
+          boarding="04:55"
+          gate="--"
+        />
       </div>
+
+      <div>
+        <SectionTitle title="住宿預訂 (按日期排序)" icon="fa-solid fa-hotel" />
+        <div className="space-y-4">
+          <StayCard 
+            theme="van"
+            name="溫哥華市中心三房公寓 (Airbnb)"
+            stars={3}
+            checkIn="2026/02/18 (週三)"
+            checkOut="2026/02/24 (週二)"
+            nights={6}
+            address="179 Keefer Place, Vancouver, BC V6B 6B9"
+            bookingId="1616323434600772"
+            price="31,139"
+            checkInTime="14:00 後"
+            checkOutTime="10:00 前"
+          />
+          <StayCard 
+            theme="yk-nova"
+            name="Nova Inn Yellowknife"
+            subName="Agoda 預訂"
+            stars={3}
+            checkIn="2026/02/24 (週二)"
+            checkOut="2026/02/27 (週五)"
+            nights={3}
+            address="4701 Franklin Ave, Yellowknife, NT X1A 2N8"
+            bookingId="1648816557"
+            price="16,388.70"
+            checkInTime="15:00 後"
+            checkOutTime="11:00 前"
+          />
+          <StayCard 
+            theme="yk-explorer"
+            name="探索者飯店 (The Explorer Hotel)"
+            subName="Trip.com 預訂"
+            stars={3}
+            checkIn="2026/02/27 (週五)"
+            checkOut="2026/02/28 (週六)"
+            nights={1}
+            address="4825 49th Avenue, Yellowknife, NT X1A 2R3"
+            bookingId="1616324795691037"
+            price="7,458"
+            checkInTime="16:00 - 00:00"
+            checkOutTime="11:00 前"
+          />
+        </div>
+      </div>
+
+      <style>{`
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        .perspective-1000 {
+          perspective: 1000px;
+        }
+      `}</style>
     </div>
   );
 };
