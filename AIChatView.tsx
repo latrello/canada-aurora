@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Card, SectionTitle } from '../components/UIProvider';
-import { askGemini } from '../services/geminiService';
+import { Card, SectionTitle } from './UIProvider';
+import { askGemini } from './geminiService';
 
 interface Message {
   id: string;
@@ -60,7 +60,6 @@ const AIChatView: React.FC = () => {
     <div className="flex flex-col h-[calc(100vh-220px)] pb-4">
       <SectionTitle title="Aurora AI 助手" icon="fa-solid fa-wand-magic-sparkles" />
       
-      {/* Chat Area */}
       <div 
         ref={scrollRef}
         className="flex-1 overflow-y-auto no-scrollbar space-y-4 px-2 py-4"
@@ -95,7 +94,6 @@ const AIChatView: React.FC = () => {
         )}
       </div>
 
-      {/* Input Area */}
       <div className="mt-4 px-2">
         <div className="bg-white rounded-[32px] p-2 soft-shadow flex items-center gap-2 border border-[#E0E5D5]">
           <input 

@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Card, SectionTitle } from '../components/UIProvider';
+import { Card, SectionTitle } from './UIProvider';
 
 const PlanningView: React.FC = () => {
   const [items, setItems] = useState([
@@ -25,12 +25,10 @@ const PlanningView: React.FC = () => {
                 {item.completed && <i className="fa-solid fa-check text-xs"></i>}
               </div>
               <span className={`flex-1 text-sm ${item.completed ? 'text-gray-300 line-through' : 'text-gray-600'}`}>{item.task}</span>
-              <span className="text-[10px] bg-gray-50 text-gray-400 px-2 py-1 rounded-full">{item.assignee}</span>
             </div>
           ))}
         </Card>
       </div>
-
       <div>
         <SectionTitle title="行李清單" icon="fa-solid fa-suitcase" />
         <Card className="space-y-1">
@@ -40,15 +38,10 @@ const PlanningView: React.FC = () => {
                 {item.completed && <i className="fa-solid fa-check text-xs"></i>}
               </div>
               <span className={`flex-1 text-sm ${item.completed ? 'text-gray-300 line-through' : 'text-gray-600'}`}>{item.task}</span>
-              <span className="text-[10px] bg-gray-50 text-gray-400 px-2 py-1 rounded-full">{item.assignee}</span>
             </div>
           ))}
         </Card>
       </div>
-
-      <button className="w-full p-4 rounded-3xl bg-white border-2 border-dashed border-[#E0E5D5] text-gray-400 font-bold text-sm">
-        + 新增清單項目
-      </button>
     </div>
   );
 };

@@ -4,10 +4,9 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { getAuth, signInAnonymously } from 'firebase/auth';
 
-// 這些資訊通常來自 Firebase 控制台的專案設定
-// 為了演示，我們使用環境變數或預設結構
 const firebaseConfig = {
-  apiKey: process.env.API_KEY, // 使用注入的 API Key
+  // 注意：process.env.API_KEY 必須是有效的 Firebase Web API Key
+  apiKey: process.env.API_KEY || "dummy-key",
   authDomain: "canada-aurora-trip.firebaseapp.com",
   projectId: "canada-aurora-trip",
   storageBucket: "canada-aurora-trip.firebasestorage.app",
@@ -15,10 +14,21 @@ const firebaseConfig = {
   appId: "aurora-app-id"
 };
 
-const app = initializeApp(firebaseConfig);
-export const db = getFirestore(app);
-export const storage = getStorage(app);
-export const auth = getAuth(app);
+let db: any = null;
+let storage: any = null;
+let auth: any = null;
 
-// 執行匿名登入以確保能讀寫測試模式下的資料
-signInAnonymously(auth).catch(err => console.error("Firebase Auth Error:", err));
+try {
+  const app = initializeApp(firebaseConfig);
+  db = getFirestore(app);
+  storage = getStorage(app);
+  auth = getAuth(app);
+
+  signInAnonymously(auth).catch(err => {
+    console.warn("Firebase 匿名登入失敗，目前處於離線預覽模式。");
+  });
+} catch (error) {
+  console.error("Firebase 初始化失敗。請檢查 API_KEY 是否正確：", error);
+}
+
+export { db, storage, auth };

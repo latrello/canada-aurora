@@ -1,8 +1,8 @@
 
 import React, { useState, useEffect } from 'react';
-import { Card, SectionTitle, Button } from '../components/UIProvider';
-import { Category, ScheduleItem } from '../types';
-import { getAuroraPrediction } from '../services/geminiService';
+import { Card, SectionTitle, Button } from './UIProvider';
+import { Category, ScheduleItem } from './types';
+import { getAuroraPrediction } from './geminiService';
 
 const categoryLang: Record<Category, { zh: string, en: string }> = {
   [Category.SCENERY]: { zh: '景點', en: 'Scenery' },
@@ -96,7 +96,6 @@ const ScheduleView: React.FC = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<ScheduleItem | null>(null);
 
-  // Form states
   const [time, setTime] = useState('');
   const [location, setLocation] = useState('');
   const [category, setCategory] = useState<Category>(Category.SCENERY);
@@ -175,7 +174,6 @@ const ScheduleView: React.FC = () => {
     }
   };
 
-  // 行程當日排序調整
   const moveItem = (index: number, direction: 'up' | 'down') => {
     const newItems = [...currentItems];
     const targetIndex = direction === 'up' ? index - 1 : index + 1;
@@ -188,7 +186,6 @@ const ScheduleView: React.FC = () => {
     setScheduleData({ ...scheduleData, [selectedDate]: newItems });
   };
 
-  // 日期行程挪移 (將當天內容移動到相鄰日期，原本內容對調)
   const shiftDay = (direction: 'left' | 'right') => {
     const currentIndex = sortedDates.indexOf(selectedDate);
     const targetIndex = direction === 'left' ? currentIndex - 1 : currentIndex + 1;
@@ -224,7 +221,6 @@ const ScheduleView: React.FC = () => {
 
   return (
     <div className="pb-24">
-      {/* Date Picker Section */}
       <div className="flex items-center justify-between mb-4 px-1">
         <SectionTitle title="行程規劃" icon="fa-solid fa-calendar-check" />
         <div className="flex gap-2">
@@ -270,7 +266,6 @@ const ScheduleView: React.FC = () => {
         })}
       </div>
 
-      {/* Aurora Prediction */}
       {isYellowknife && prediction && (
         <Card className="mb-6 bg-gradient-to-br from-[#1a2a6c] to-[#b21f1f] text-white border-0">
           <div className="flex justify-between items-start">
@@ -284,7 +279,6 @@ const ScheduleView: React.FC = () => {
         </Card>
       )}
 
-      {/* Timeline Header */}
       <div className="flex items-center justify-between mb-6 px-2">
         <div className="flex items-center gap-2">
            <i className="fa-solid fa-clock-rotate-left text-[#88D8B0] text-xl"></i>
@@ -300,7 +294,6 @@ const ScheduleView: React.FC = () => {
         </button>
       </div>
 
-      {/* Timeline Items */}
       <div className="relative ml-4 pl-8 border-l-2 border-dashed border-[#E0E5D5] space-y-6">
         {currentItems.length > 0 ? currentItems.map((item, index) => (
           <div key={item.id} className="relative group">
@@ -312,7 +305,6 @@ const ScheduleView: React.FC = () => {
                   <h4 className="text-lg font-black text-[#5D6D7E] leading-snug mt-1">{item.location}</h4>
                 </div>
                 
-                {/* 排序控制按鈕 */}
                 <div className="flex flex-col gap-1 mr-2">
                    <button 
                     onClick={() => moveItem(index, 'up')}
@@ -366,7 +358,6 @@ const ScheduleView: React.FC = () => {
         )}
       </div>
 
-      {/* Add/Edit Modal */}
       {isFormOpen && (
         <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] flex items-end justify-center">
           <div className="bg-white w-full max-w-md rounded-t-[40px] p-8 animate-in slide-in-from-bottom-full duration-300">

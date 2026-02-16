@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Card, SectionTitle, Button } from '../components/UIProvider';
+import { Card, SectionTitle, Button } from './UIProvider';
 
 const FlightCard: React.FC<{
   flightNo: string;
@@ -30,7 +30,6 @@ const FlightCard: React.FC<{
         {isDark && (
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-[shimmer_2s_infinite] pointer-events-none" />
         )}
-
         <div className={`flex justify-between items-center border-b pb-4 mb-4 ${isDark ? 'border-white/10' : 'border-gray-100'}`}>
           <div className="flex items-center gap-3">
             <div className={`w-10 h-10 rounded-2xl flex items-center justify-center ${isDark ? 'bg-white/10' : 'bg-[#88D8B0]/10'}`}>
@@ -54,7 +53,6 @@ const FlightCard: React.FC<{
             <h2 className="text-4xl font-black tracking-tighter">{fromCode}</h2>
             <p className={`text-[10px] font-bold uppercase truncate ${isDark ? 'opacity-60' : 'text-gray-400'}`}>{fromName}</p>
           </div>
-          
           <div className="flex-1 flex flex-col items-center px-4 mb-4">
             <div className={`relative w-full h-[2px] ${isDark ? 'bg-white/20' : 'bg-gray-100'}`}>
               <div className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-2 ${isDark ? 'bg-[#1a2a6c]' : 'bg-white'}`}>
@@ -63,18 +61,11 @@ const FlightCard: React.FC<{
             </div>
             <p className={`text-[9px] font-black mt-2 uppercase tracking-tighter ${isDark ? 'opacity-40' : 'text-gray-300'}`}>{duration}</p>
           </div>
-
           <div className="text-right w-24">
             <h4 className={`text-xl font-black mb-1 ${isDark ? 'text-white' : 'text-[#88D8B0]'}`}>{arrivalTime}</h4>
             <h2 className="text-4xl font-black tracking-tighter">{toCode}</h2>
             <p className={`text-[10px] font-bold uppercase truncate ${isDark ? 'opacity-60' : 'text-gray-400'}`}>{toName}</p>
           </div>
-        </div>
-
-        <div className="relative h-6 mb-4 flex items-center justify-center">
-          <div className={`w-full border-t border-dashed ${isDark ? 'border-white/20' : 'border-gray-200'}`}></div>
-          <div className={`absolute -left-9 w-6 h-6 rounded-full ${isDark ? 'bg-[#F7F4EB]' : 'bg-[#F7F4EB]'}`}></div>
-          <div className={`absolute -right-9 w-6 h-6 rounded-full ${isDark ? 'bg-[#F7F4EB]' : 'bg-[#F7F4EB]'}`}></div>
         </div>
 
         <div className="grid grid-cols-3 gap-2 text-center">
@@ -115,7 +106,6 @@ const StayCard: React.FC<{
     'yk-nova': 'bg-[#F0F7FD] border-[#D5E1E5]',
     'yk-explorer': 'bg-[#FCF5FD] border-[#E5D5E1]'
   };
-
   const accentColors = {
     van: 'text-amber-500',
     'yk-nova': 'text-blue-500',
@@ -139,40 +129,27 @@ const StayCard: React.FC<{
             已確認
           </span>
         </div>
-
         <div className="flex justify-between items-center bg-white/50 backdrop-blur-sm rounded-2xl p-4 mb-4 border border-white">
           <div className="text-center">
             <p className="text-[10px] text-gray-400 font-black uppercase mb-1">入住</p>
             <p className="text-sm font-black text-[#5D6D7E]">{checkIn}</p>
-            <p className="text-[10px] font-bold text-gray-400">{checkInTime}</p>
           </div>
-          <div className="flex flex-col items-center">
-            <div className="bg-gray-100 px-3 py-1 rounded-full text-[10px] font-black text-gray-400">
-              {nights} 晚
-            </div>
-            <div className="h-4 w-[1px] bg-gray-200 my-1"></div>
+          <div className="bg-gray-100 px-3 py-1 rounded-full text-[10px] font-black text-gray-400">
+            {nights} 晚
           </div>
           <div className="text-center">
             <p className="text-[10px] text-gray-400 font-black uppercase mb-1">退房</p>
             <p className="text-sm font-black text-[#5D6D7E]">{checkOut}</p>
-            <p className="text-[10px] font-bold text-gray-400">{checkOutTime}</p>
           </div>
         </div>
-
         <div className="space-y-3">
           <div className="flex items-start gap-3">
             <i className={`fa-solid fa-location-dot mt-1 ${accentColors[theme]}`}></i>
             <p className="text-xs text-gray-500 font-medium leading-relaxed">{address}</p>
           </div>
           <div className="flex justify-between items-center pt-3 border-t border-gray-100">
-            <div>
-              <p className="text-[10px] text-gray-400 font-black uppercase">訂單編號</p>
-              <p className="text-xs font-mono font-bold text-gray-500">{bookingId}</p>
-            </div>
-            <div className="text-right">
-              <p className="text-[10px] text-gray-400 font-black uppercase">支付總額</p>
-              <p className={`text-lg font-black ${accentColors[theme]}`}>NT {price}</p>
-            </div>
+            <p className="text-xs font-mono font-bold text-gray-500">{bookingId}</p>
+            <p className={`text-lg font-black ${accentColors[theme]}`}>{price}</p>
           </div>
         </div>
       </Card>
@@ -208,15 +185,11 @@ const BookingView: React.FC = () => {
         </div>
         <div className="grid grid-cols-3 gap-4">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 'C', 0, '✓'].map(n => (
-            <button 
-              key={n.toString()}
-              onClick={() => {
-                if (n === 'C') setPin('');
-                else if (n === '✓') handleUnlock();
-                else if (pin.length < 3) setPin(p => p + n);
-              }}
-              className="w-16 h-16 rounded-2xl bg-white soft-shadow font-black text-lg text-[#5D6D7E] active:scale-90 transition-all"
-            >
+            <button key={n.toString()} onClick={() => {
+              if (n === 'C') setPin('');
+              else if (n === '✓') handleUnlock();
+              else if (pin.length < 3) setPin(p => p + n);
+            }} className="w-16 h-16 rounded-2xl bg-white soft-shadow font-black text-lg text-[#5D6D7E] active:scale-90 transition-all">
               {n}
             </button>
           ))}
@@ -226,59 +199,15 @@ const BookingView: React.FC = () => {
   }
 
   return (
-    <div className="pb-24 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="pb-24 space-y-8">
       <div>
-        <div className="flex justify-between items-center mb-4">
-          <SectionTitle title="國際航段 (去程)" icon="fa-solid fa-plane-departure" />
-          <button onClick={() => setIsLocked(true)} className="text-[10px] font-black text-gray-300 uppercase tracking-widest px-4 py-2 rounded-xl bg-gray-50 border border-gray-100">
-            Lock 隱藏
-          </button>
-        </div>
-        <FlightCard 
-          type="intl"
-          flightNo="BR 10"
-          fromCode="TPE"
-          fromName="Taipei Taoyuan"
-          toCode="YVR"
-          toName="Vancouver Int."
-          date="FEB 18"
-          departureTime="23:55"
-          arrivalTime="18:35"
-          duration="12h 45m"
-          boarding="23:15"
-          gate="D3"
-        />
+        <SectionTitle title="國際航段 (去程)" icon="fa-solid fa-plane-departure" />
+        <FlightCard type="intl" flightNo="BR 10" fromCode="TPE" fromName="Taipei Taoyuan" toCode="YVR" toName="Vancouver Int." date="FEB 18" departureTime="23:55" arrivalTime="18:35" duration="12h 45m" boarding="23:15" gate="D3" />
       </div>
-
       <div>
         <SectionTitle title="住宿預訂" icon="fa-solid fa-hotel" />
-        <div className="space-y-4">
-          <StayCard 
-            theme="van"
-            name="溫哥華市中心三房公寓"
-            subName="LXY Condo"
-            stars={3}
-            checkIn="2026/02/18 (週三)"
-            checkOut="2026/02/24 (週二)"
-            nights={6}
-            address="179 Keefer Place, Vancouver, BC V6B 6B9"
-            bookingId="1616323434600772"
-            price="$31,139"
-            checkInTime="14:00 後"
-            checkOutTime="10:00 前"
-          />
-        </div>
+        <StayCard theme="van" name="溫哥華市中心三房公寓" subName="LXY Condo" stars={3} checkIn="2026/02/18" checkOut="2026/02/24" nights={6} address="179 Keefer Place, Vancouver" bookingId="16163234" price="$31,139" checkInTime="14:00" checkOutTime="10:00" />
       </div>
-
-      <style>{`
-        @keyframes shimmer {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(100%); }
-        }
-        .perspective-1000 {
-          perspective: 1000px;
-        }
-      `}</style>
     </div>
   );
 };

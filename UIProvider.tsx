@@ -19,12 +19,7 @@ export const Button: React.FC<{
     secondary: "bg-white border-2 border-[#E0E5D5] text-[#5D6D7E]",
     danger: "bg-rose-400 text-white"
   };
-  
-  return (
-    <button onClick={onClick} className={`${base} ${themes[variant]} ${className}`}>
-      {children}
-    </button>
-  );
+  return <button onClick={onClick} className={`${base} ${themes[variant]} ${className}`}>{children}</button>;
 };
 
 export const SectionTitle: React.FC<{ title: string; icon?: string }> = ({ title, icon }) => (

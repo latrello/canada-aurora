@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Card, SectionTitle, Button } from '../components/UIProvider';
-import { db, storage } from '../services/firebase';
+import { Card, SectionTitle, Button } from './UIProvider';
+import { db, storage } from './firebase';
 import { collection, addDoc, query, orderBy, onSnapshot, Timestamp } from 'firebase/firestore';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
@@ -22,17 +22,27 @@ const JournalView: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const q = query(collection(db, 'journals'), orderBy('createdAt', 'desc'));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
-      const docs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as JournalEntry[];
-      setEntries(docs);
-    });
-    return () => unsubscribe();
+    if (!db) return; // 如果 Firebase 未初始化則跳過
+    try {
+      const q = query(collection(db, 'journals'), orderBy('createdAt', 'desc'));
+      const unsubscribe = onSnapshot(q, (snapshot) => {
+        const docs = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as JournalEntry[];
+        setEntries(docs);
+      }, (error) => {
+        console.warn("Firestore listener error:", error);
+      });
+      return () => unsubscribe();
+    } catch (e) {
+      console.warn("Failed to connect to Firestore.");
+    }
   }, []);
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
-    if (!files || !content.trim()) return;
+    if (!files || !content.trim() || !db || !storage) {
+      alert("Firebase 尚未配置完成，目前無法上傳照片。");
+      return;
+    }
 
     setIsUploading(true);
     try {
@@ -57,7 +67,7 @@ const JournalView: React.FC = () => {
       setShowAddForm(false);
     } catch (error) {
       console.error("Upload failed:", error);
-      alert("上傳失敗，請確認 Firebase Storage 已開啟測試模式！");
+      alert("上傳失敗！請確認 Firebase 控制台已開啟 Storage 並設為測試模式。");
     } finally {
       setIsUploading(false);
     }
@@ -125,7 +135,7 @@ const JournalView: React.FC = () => {
             </div>
             <div>
               <h4 className="font-bold text-sm text-gray-700">{entry.author}</h4>
-              <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{entry.location} • {entry.createdAt?.toDate().toLocaleDateString()}</p>
+              <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest">{entry.location} • {entry.createdAt?.toDate?.().toLocaleDateString() || 'Just now'}</p>
             </div>
           </div>
           

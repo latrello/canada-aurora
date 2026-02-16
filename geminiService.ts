@@ -1,21 +1,16 @@
 
 import { GoogleGenAI, Type } from "@google/genai";
 
-// Use the API key exclusively from process.env.API_KEY as per guidelines
+// Always initialize with the named parameter apiKey from process.env.API_KEY
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export const getAuroraPrediction = async (date: string, location: string) => {
-  if (!process.env.API_KEY) {
-    console.warn("Missing API Key. Using mock data for Aurora prediction.");
-    return { chance: 75, kpIndex: 4, description: "極光女神正在趕來的路上 (請配置 API Key 以獲得即時預測)。" };
-  }
-
+  if (!process.env.API_KEY) return { chance: 75, kpIndex: 4, description: "極光女神正在趕來的路上。" };
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
-      contents: `Predict the Aurora Borealis visibility for ${location} on ${date}. 
-      Give me a percentage chance and a short poetic description in Traditional Chinese.`,
-      config: {
+      contents: `Predict Aurora visibility for ${location} on ${date}. Give me a percentage chance and a short poetic description in Traditional Chinese.`,
+      config: { 
         responseMimeType: "application/json",
         responseSchema: {
           type: Type.OBJECT,
@@ -28,34 +23,28 @@ export const getAuroraPrediction = async (date: string, location: string) => {
         }
       }
     });
-    // response.text is a property, not a method
+    // Access response.text as a property
     return JSON.parse(response.text || "{}");
-  } catch (error) {
-    console.error("Gemini Error:", error);
-    return { chance: 65, kpIndex: 4, description: "今晚極光女神可能會降臨，請準備好相機！" };
+  } catch (e) { 
+    console.error("Gemini Error:", e);
+    return { chance: 50, kpIndex: 3, description: "今晚雲層較厚，建議稍後再觀察。" }; 
   }
 };
 
 export const askGemini = async (prompt: string) => {
-  if (!process.env.API_KEY) return "請先在設定中配置 Gemini API Key 才能與我聊天喔！";
-
+  if (!process.env.API_KEY) return "請先配置 API Key。";
   try {
     const response = await ai.models.generateContent({
       model: "gemini-3-flash-preview",
       contents: prompt,
-      config: {
-        systemInstruction: "你是一位加拿大旅遊專家與極光攝影大師。請用親切、專業且夢幻的口吻回答問題，使用繁體中文，字數請控制在 200 字以內。如果提到氣溫，請提醒使用者注意保溫。",
-      },
+      config: { 
+        systemInstruction: "你是一位加拿大旅遊專家與極光攝影大師。請用親切、專業且夢幻的口吻回答問題，使用繁體中文，字數請控制在 200 字以內。如果提到氣溫，請提醒使用者注意保溫。" 
+      }
     });
-    // response.text is a property, not a method
-    return response.text || "抱歉，極光女神暫時斷開了連結，請稍後再試。";
-  } catch (error) {
-    console.error("Gemini Chat Error:", error);
-    return "極光似乎被雲層擋住了 (發生錯誤)，請再問一次吧！";
+    // Access response.text as a property
+    return response.text || "系統暫忙。";
+  } catch (e) { 
+    console.error("Gemini Chat Error:", e);
+    return "發生錯誤。"; 
   }
-};
-
-export const getCurrencyRate = async () => {
-  // 這裡之後可以串接真正的 API，目前回傳台灣銀行概估匯率
-  return { cadToTwd: 23.85 };
 };
