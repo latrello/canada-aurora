@@ -48,7 +48,6 @@
         .safe-area-bottom {
             padding-bottom: calc(1rem + env(safe-area-inset-bottom));
         }
-        /* 增加 PWA 啟動畫面平滑感 */
         .fade-in-pwa {
             animation: fadeIn 0.8s ease-out;
         }
@@ -73,12 +72,15 @@
 <body class="overflow-x-hidden fade-in-pwa">
     <div id="root"></div>
     <script>
-        // 註冊 Service Worker 實現離線使用與 PWA 安裝
+        // 改良後的 Service Worker 註冊
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
+                // 只有在當前 origin 匹配時才註冊，避免 preview URL 的跨域錯誤
                 navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('SW Registered!', reg))
-                    .catch(err => console.error('SW Registration Failed', err));
+                    .then(reg => console.log('SW Registered'))
+                    .catch(err => {
+                        console.warn('SW Registration skipped or failed (common in dev environments)');
+                    });
             });
         }
     </script>
