@@ -10,7 +10,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="極光之旅">
-    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/maple-leaf.svg">
+    <!-- iOS 必須使用 PNG 格式作為圖示 -->
+    <link rel="apple-touch-icon" href="https://img.icons8.com/color/512/maple-leaf.png">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#F7F4EB">
 
@@ -72,13 +73,15 @@
 </head>
 <body class="overflow-x-hidden fade-in-pwa">
     <div id="root"></div>
+    <!-- 確保載入 React 應用程式入口 -->
+    <script type="module" src="index.tsx"></script>
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
+                navigator.serviceWorker.register('sw.js')
                     .then(reg => console.log('SW Registered'))
                     .catch(err => {
-                        console.warn('Service Worker 註冊被跳過:', err.message);
+                        console.warn('Service Worker 註冊錯誤:', err.message);
                     });
             });
         }

@@ -5,19 +5,19 @@
   "description": "Dreamy Canadian Northern Lights Trip Planner",
   "icons": [
     {
-      "src": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/maple-leaf.svg",
-      "type": "image/svg+xml",
+      "src": "https://img.icons8.com/color/192/maple-leaf.png",
+      "type": "image/png",
       "sizes": "192x192",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
-      "src": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/maple-leaf.svg",
-      "type": "image/svg+xml",
+      "src": "https://img.icons8.com/color/512/maple-leaf.png",
+      "type": "image/png",
       "sizes": "512x512",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ],
-  "start_url": "./index.html",
+  "start_url": "index.html",
   "display": "standalone",
   "orientation": "portrait",
   "theme_color": "#F7F4EB",
