@@ -28,23 +28,53 @@ const weatherDataMap: Record<string, { temp: string, condition: string, label: s
 
 const initialScheduleData: Record<string, ScheduleItem[]> = {
   '2024-02-18': [
-    { id: '18-1', time: '23:55', location: '桃園國際機場 Taoyuan Int. Airport (TPE)', category: Category.TRANSPORT, note: '搭乘長榮航空 BR10 前往溫哥華 \n Fly to Vancouver via EVA Air BR10' },
-    { id: '18-2', time: '18:35', location: '溫哥華國際機場 Vancouver Int. Airport (YVR)', category: Category.TRANSPORT, note: '抵達並辦理民宿 Check-in \n Arrival and Airbnb Check-in' }
+    { id: '18-1', time: '23:55-18:35', location: '桃園(TPE) > 溫哥華(YVR)', category: Category.TRANSPORT, note: '搭乘 BR10 前往溫哥華 \n 飯店 Check-in 休息' }
   ],
   '2024-02-19': [
-    { id: '19-1', time: '13:00', location: '煤氣鎮 蒸汽鐘 Gastown Steam Clock', category: Category.SCENERY, note: '蒸汽鐘每15分鐘鳴笛 \n Steam clock whistles every 15 mins' },
-    { id: '19-2', time: '14:30', location: '卡皮拉諾吊橋公園 Capilano Suspension Bridge', category: Category.SCENERY, note: '搭乘免費接駁車前往 \n Take the free shuttle bus' },
-    { id: '19-3', time: '19:30', location: '加拿大廣場 Canada Place', category: Category.SCENERY, note: '欣賞夜景回民宿 \n Enjoy the night view' }
+    { id: '19-1', time: '14:30', location: '煤氣鎮 蒸汽鐘 Gastown', category: Category.SCENERY, note: '民宿走21分至Waterfront搭Seabus至北溫碼頭 \n 蒸汽鐘鳴笛體驗' },
+    { id: '19-2', time: '19:00', location: '卡皮拉諾吊橋公園 Capilano', category: Category.SCENERY, note: '由Canada Place搭乘免費接駁車 \n 門票建議網路預購' },
+    { id: '19-3', time: '19:20', location: 'Canada Place 夜景', category: Category.SCENERY, note: '搭接駁車回 Canada Place \n 走回民宿約 21 分鐘' }
   ],
   '2024-02-20': [
-    { id: '20-1', time: '07:00', location: '出門 (Lyft or 捷運)', category: Category.TRANSPORT, note: '預估車費 $40-50' },
-    { id: '20-2', time: '09:00', location: 'BC Ferries 渡輪 (Tsawwassen to Victoria)', category: Category.TRANSPORT },
-    { id: '20-3', time: '12:30', location: '維多利亞唐人街 & 番攤巷', category: Category.SCENERY },
-    { id: '20-4', time: '16:00', location: '維多利亞漁人碼頭', category: Category.FOOD, note: '推薦炸魚薯條' }
+    { id: '20-1', time: '07:00', location: '維多利亞 Victoria (一整日)', category: Category.SCENERY, note: 'Uber/Lyft(約40-60分)至 Tsawwassen \n 09:00~10:35 渡輪至 Swartz Bay' },
+    { id: '20-2', time: '12:30', location: '維多利亞市區巡禮', category: Category.SCENERY, note: '景點：唐人街、番攤巷、內港步道、卑詩省議會' },
+    { id: '20-3', time: '16:00', location: '漁人碼頭 Fisherman\'s Wharf', category: Category.FOOD, note: '維多利亞必吃行程 \n 18:30~20:35 渡輪返回溫哥華' }
+  ],
+  '2024-02-21': [
+    { id: '21-1', time: '09:00', location: '格蘭維爾島 Granville Island', category: Category.SCENERY, note: '捷運Granville+50號公車 \n 逛公眾市場 (9:00-18:00)' },
+    { id: '21-2', time: '16:30', location: '夕陽海灘 Sunset Beach', category: Category.SCENERY, note: '搭乘 Aquabus/False Creek Ferries \n 看夕陽 & 史丹利公園' }
+  ],
+  '2024-02-22': [
+    { id: '22-1', time: '09:00', location: '北溫碼頭 Lonsdale Quay', category: Category.SCENERY, note: '市場開放時間 09:00-19:00 \n 搭乘捷運+Seabus' },
+    { id: '22-2', time: '12:30', location: '加拿大廣場 Canada Place', category: Category.SCENERY, note: '搭 Seabus 從北溫返回市區 \n 輕鬆巡禮市中心' }
+  ],
+  '2024-02-23': [
+    { id: '23-1', time: '全日', location: '海天公路 Sea to Sky Highway', category: Category.SCENERY, note: '景點：馬蹄灣、波特灣省立公園、海天纜車' },
+    { id: '23-2', time: '14:00', location: '威斯勒 Whistler', category: Category.SCENERY, note: 'Excalibur Gondola 纜車免費 \n 注意：需提前 72 小時預訂' },
+    { id: '23-3', time: '18:00', location: 'Vallea Lumina 燈光秀', category: Category.SCENERY, note: '夜間燈光秀體驗 \n 優惠碼：WINTER15' }
   ],
   '2024-02-24': [
-    { id: '24-1', time: '15:45', location: '溫哥華機場 (國內線)', category: Category.TRANSPORT, note: '飛往黃刀鎮 (YZF)' },
-    { id: '24-3', time: '22:00', location: '追極光之旅 Yellowknife Aurora Hunting', category: Category.SCENERY }
+    { id: '24-1', time: '15:45-20:57', location: '溫哥華 > 黃刀鎮 (YZF)', category: Category.TRANSPORT, note: '國內線飛航 \n 包含極光接送' },
+    { id: '24-2', time: '22:00-02:00', location: '黃刀鎮 追極光', category: Category.SCENERY, note: '極光初體驗 \n 第一晚追光之旅' }
+  ],
+  '2024-02-25': [
+    { id: '25-1', time: '10:00-12:00', location: '黃刀鎮 市區觀光 Tour', category: Category.SCENERY },
+    { id: '25-2', time: '22:00-02:00', location: '夢幻小屋極光之旅', category: Category.SCENERY, note: '極光攝影 & 小屋休息' }
+  ],
+  '2024-02-26': [
+    { id: '26-1', time: '14:00-15:00', location: '狗拉雪橇 + 雪鞋健行', category: Category.SCENERY },
+    { id: '26-2', time: '20:50-01:00', location: 'Aurora Village 極光村', category: Category.SCENERY, note: '夢幻原住民帳篷與極光' }
+  ],
+  '2024-02-27': [
+    { id: '27-1', time: '11:00', location: '飯店 Check-out / Check-in', category: Category.STAY, note: 'Nova Inn 退房 \n 飯店遷移至 The Explorer Hotel' },
+    { id: '27-2', time: '14:00-16:00', location: '冰洞徒步之旅 Ice Cave', category: Category.SCENERY, note: '探索冬季絕美冰洞' }
+  ],
+  '2024-02-28': [
+    { id: '28-1', time: '05:25-07:17', location: '黃刀鎮(YZF) > 溫哥華(YVR)', category: Category.TRANSPORT, note: '04:30 辦理退房 \n 搭車前往機場' },
+    { id: '28-2', time: '11:00', location: 'Outlet 購物採買', category: Category.SCENERY, note: 'McArthurGlen Designer Outlet \n 最終採買行程' }
+  ],
+  '2024-03-01': [
+    { id: '01-1', time: '00:15', location: '溫哥華(YVR) > 桃園(TPE)', category: Category.TRANSPORT, note: '搭乘 BR009 回台 \n 結束精彩旅程' }
   ]
 };
 
@@ -52,6 +82,7 @@ const ScheduleView: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState('2024-02-18');
   const [scheduleData, setScheduleData] = useState<Record<string, ScheduleItem[]>>(() => {
     const saved = localStorage.getItem('aurora_trip_schedule');
+    // 如果 local 有資料就優先使用，若無則用新同步的 initialScheduleData
     return saved ? JSON.parse(saved) : initialScheduleData;
   });
   
@@ -96,7 +127,6 @@ const ScheduleView: React.FC = () => {
     setIsFormOpen(false);
   };
 
-  // Added openEditForm to fix the error in ScheduleView.tsx
   const openEditForm = (item: ScheduleItem) => {
     setEditingItem(item);
     setTime(item.time);
@@ -132,7 +162,7 @@ const ScheduleView: React.FC = () => {
 
   const handleDelete = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
-    e.stopPropagation(); // 防止觸發父層點擊
+    e.stopPropagation(); 
     if (window.confirm('確定要刪除此行程嗎？')) {
       setScheduleData(prev => ({
         ...prev,
