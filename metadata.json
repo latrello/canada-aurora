@@ -1,0 +1,8 @@
+{
+  "name": "Northern Lights Journey",
+  "description": "A dreamy PWA for planning your Canadian Aurora adventure, featuring schedule tracking, booking management, expense tracking, and aurora predictions.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}

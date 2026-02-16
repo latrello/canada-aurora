@@ -1,0 +1,25 @@
+
+{
+  "short_name": "極光之旅",
+  "name": "Canada Aurora Journey",
+  "description": "Dreamy Canadian Northern Lights Trip Planner",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/maple-leaf.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/solid/maple-leaf.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#F7F4EB",
+  "background_color": "#F7F4EB"
+}
